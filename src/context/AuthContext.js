@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import 'firebase/auth';
-import { auth } from '../firebase';
+import firebase, { auth } from '../firebase';
 
 //Permite que toda la aplicación tenga acceso a la data
 const AuthContext = React.createContext();

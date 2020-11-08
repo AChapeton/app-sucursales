@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
+import { googleSignUp } from '../firebase';
 
 export default function Login() {
   const emailRef = useRef();
@@ -24,6 +25,17 @@ export default function Login() {
     }
     setLoading(false);
   }
+
+  const GoogleAuth = () => {
+    try {
+      setError('');
+      googleSignUp();
+      setLoading(true);
+      history.push('/');
+    } catch {
+      setError('Failed to creat an account with Google');
+    }
+  };
 
   return (
     <>
@@ -48,6 +60,17 @@ export default function Login() {
               Log In
             </Button>
           </Form>
+          <h4 className="w-100 text-center">--- or ---</h4>
+          <Button
+            disabled={loading}
+            type="button"
+            className="w-100"
+            onClick={() => {
+              GoogleAuth();
+            }}
+          >
+            Sign Up with Google
+          </Button>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
