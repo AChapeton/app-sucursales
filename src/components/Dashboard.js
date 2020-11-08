@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Button, Alert } from 'react-bootstrap';
+import { Card, Button, Alert, Container } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
+import Header from './Header';
+import ContainerLayout from './ContainerLayout';
 
 export default function Dashboard() {
   const [error, setError] = useState('');
@@ -20,18 +22,23 @@ export default function Dashboard() {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
-          Log Out
-        </Button>
-      </div>
+      <Header />
+      <ContainerLayout>
+        <div className="w-100" style={{ maxWidth: '400px' }}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Profile</h2>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <strong>Email:</strong> {currentUser.email}
+            </Card.Body>
+          </Card>
+          <div className="w-100 text-center mt-2">
+            <Button variant="link" onClick={handleLogout}>
+              Log Out
+            </Button>
+          </div>
+        </div>
+      </ContainerLayout>
     </>
   );
 }
