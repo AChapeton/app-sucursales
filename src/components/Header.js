@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light w-100">
-        <Link className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           Navbar
         </Link>
         <button
@@ -22,23 +22,18 @@ export default function Header() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <Link className="nav-link" href="#">
+              <Link className="nav-link" to="/">
                 Home <span className="sr-only">(current)</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#">
-                Features
+              <Link className="nav-link" to="/offices">
+                Offices
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" href="#">
-                Pricing
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link disabled" href="#">
-                Disabled
+              <Link className="nav-link" to="/new_office">
+                New Office
               </Link>
             </li>
           </ul>
