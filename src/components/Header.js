@@ -6,7 +6,7 @@ export default function Header() {
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light w-100">
         <Link className="navbar-brand" to="/">
-          Navbar
+          Office App
         </Link>
         <button
           className="navbar-toggler"
