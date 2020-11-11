@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { db } from '../firebase';
 import {
   Container,
   Row,
@@ -6,61 +7,59 @@ import {
   Card,
   ListGroup,
   ListGroupItem,
+  Button,
 } from 'react-bootstrap';
 import ContainerLayout from './ContainerLayout';
 
 export default function OfficeList() {
+  useEffect(() => {
+    getOffices();
+  }, []);
+
+  const [offices, setOffices] = useState([]);
+
+  const getOffices = () => {
+    db.collection('offices').onSnapshot((querySnapshot) => {
+      const docs = [];
+      querySnapshot.forEach((doc) => {
+        docs.push({ ...doc.data(), id: doc.id });
+      });
+      setOffices(docs);
+    });
+  };
+
   return (
     <>
       <ContainerLayout>
-        <Container fluid>
-          <Row>
-            <Col>
-              <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                  <Card.Title className="text-center">Card Title</Card.Title>
-                </Card.Body>
-                <ListGroup className="list-group-flush">
-                  <ListGroupItem>Ganancias: </ListGroupItem>
-                  <ListGroupItem>Empleados: </ListGroupItem>
-                  <ListGroupItem>Vestibulum at eros</ListGroupItem>
-                </ListGroup>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-        <Container fluid>
-          <Row>
-            <Col>
-              <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                  <Card.Title className="text-center">Card Title</Card.Title>
-                </Card.Body>
-                <ListGroup className="list-group-flush">
-                  <ListGroupItem>Cras justo odio</ListGroupItem>
-                  <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                  <ListGroupItem>Vestibulum at eros</ListGroupItem>
-                </ListGroup>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-        <Container fluid>
-          <Row>
-            <Col>
-              <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                  <Card.Title className="text-center">Card Title</Card.Title>
-                </Card.Body>
-                <ListGroup className="list-group-flush">
-                  <ListGroupItem>Cras justo odio</ListGroupItem>
-                  <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                  <ListGroupItem>Vestibulum at eros</ListGroupItem>
-                </ListGroup>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+        {offices.map((office) => {
+          return (
+            <Container fluid id={office.id}>
+              <Row>
+                <Col>
+                  <Card style={{ width: '18rem' }}>
+                    <Card.Body>
+                      <Card.Title className="text-center">
+                        {office.name}
+                      </Card.Title>
+                    </Card.Body>
+                    <ListGroup className="list-group-flush">
+                      <ListGroupItem>
+                        Ganancias: {office.earnings}
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        Empleados: {office.employees}
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <Button>Edit</Button>
+                        <Button>Delete</Button>
+                      </ListGroupItem>
+                    </ListGroup>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
+          );
+        })}
       </ContainerLayout>
     </>
   );
