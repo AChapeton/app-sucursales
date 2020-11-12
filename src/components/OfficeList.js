@@ -9,6 +9,7 @@ import {
   ListGroupItem,
   Button,
 } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import ContainerLayout from './ContainerLayout';
 
 export default function OfficeList() {
@@ -28,35 +29,62 @@ export default function OfficeList() {
     });
   };
 
+  const deleteOffice = async (id) => {
+    if (window.confirm('Are you sure you want to delete this office?')) {
+      await db
+        .collection('offices')
+        .doc(id)
+        .delete();
+      toast('Office deleted', {
+        type: 'error',
+      });
+    }
+  };
+
+  const stateOffice = (earning) => {
+    if (earning < 30000) {
+      return 'Good job';
+    } else {
+      return 'Excellen job!';
+    }
+  };
+
   return (
     <>
       <ContainerLayout>
         {offices.map((office) => {
           return (
-            <Container fluid id={office.id}>
-              <Row>
-                <Col>
-                  <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                      <Card.Title className="text-center">
-                        {office.name}
-                      </Card.Title>
-                    </Card.Body>
-                    <ListGroup className="list-group-flush">
-                      <ListGroupItem>
-                        Ganancias: {office.earnings}
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        Empleados: {office.employees}
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        <Button>Edit</Button>
-                        <Button>Delete</Button>
-                      </ListGroupItem>
-                    </ListGroup>
-                  </Card>
-                </Col>
-              </Row>
+            <Container id={office.id}>
+              <div className="w-100 mb-4">
+                <Card className="w-100" style={{ width: '18rem' }}>
+                  <Card.Body>
+                    <Card.Title className="text-center">
+                      {office.name}
+                    </Card.Title>
+                  </Card.Body>
+                  <ListGroup className="list-group-flush">
+                    <ListGroupItem>
+                      <strong>Earnings:</strong> ${office.earnings}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      <strong>Employees:</strong> {office.employees}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      <strong>State:</strong>{' '}
+                      {stateOffice(parseInt(office.earnings))}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                      <Button
+                        className="w-100"
+                        variant="danger"
+                        onClick={() => deleteOffice(office.id)}
+                      >
+                        Delete
+                      </Button>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Card>
+              </div>
             </Container>
           );
         })}

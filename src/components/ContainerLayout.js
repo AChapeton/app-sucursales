@@ -7,7 +7,7 @@ export default function ContainerLayout({ children }) {
     <>
       <Header />
       <Container
-        className="d-flex align-items-center justify-content-center"
+        className="d-flex flex-column align-items-center justify-content-center mt-4"
         style={{ minHeight: '100vh' }}
       >
         {children}

@@ -7,6 +7,8 @@ import PrivateRoute from './PrivateRoute';
 import { Container } from 'react-bootstrap';
 import { AuthProvider } from '../context/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
           </Switch>
         </AuthProvider>
       </Router>
+      <ToastContainer />
     </Container>
   );
 }

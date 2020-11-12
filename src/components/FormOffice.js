@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-
 export default function FormOffice(props) {
   const initialStateValues = {
     name: '',
     earnings: '',
     employees: '',
+    state: '',
   };
 
   const [office, setOffice] = useState({ initialStateValues });
